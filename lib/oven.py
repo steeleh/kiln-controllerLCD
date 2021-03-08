@@ -162,13 +162,14 @@ class Oven (threading.Thread):
             self.heat = 1.0
             if gpio_available:
                if config.heater_invert:
-                 GPIO.output(config.gpio_heat, GPIO.LOW)
-                 time.sleep(self.time_step * value)
-                 GPIO.output(config.gpio_heat, GPIO.HIGH)
+                 if GPIO.input(config.gpio_heat) == 0:
+                    GPIO.output(config.gpio_heat, GPIO.HIGH)
+                    time.sleep(self.time_step * value)
                else:
-                 GPIO.output(config.gpio_heat, GPIO.HIGH)
-                 time.sleep(self.time_step * value)
-                 GPIO.output(config.gpio_heat, GPIO.LOW)
+                 if GPIO.input(config.gpio_heat) == 1:
+                    GPIO.output(config.gpio_heat, GPIO.LOW)
+                    time.sleep(self.time_step * value)
+
             else:
                  # for runs that are simulations
                  time.sleep(self.time_step * value)
@@ -176,9 +177,11 @@ class Oven (threading.Thread):
             self.heat = 0.0
             if gpio_available:
                if config.heater_invert:
-                 GPIO.output(config.gpio_heat, GPIO.HIGH)
+                 if GPIO.input(config.gpio_heat)==1:
+                    GPIO.output(config.gpio_heat, GPIO.LOW)
                else:
-                 GPIO.output(config.gpio_heat, GPIO.LOW)
+                 GPIO.output(config.gpio_heat, GPIO.HIGH)
+
 
 
     def get_state(self):
