@@ -1,3 +1,4 @@
+![schematicLCD](https://user-images.githubusercontent.com/37072644/112059057-46b8e180-8b53-11eb-9aa2-8e5fe3ee6da3.jpg)
 Kiln Controller
 ==========
 
