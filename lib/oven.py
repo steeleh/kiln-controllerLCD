@@ -7,6 +7,13 @@ import json
 
 import config
 
+import config 
+import csv
+from table_logger import TableLogger
+from RPLCD.i2c import CharLCD
+
+lcd = CharLCD('PCF8574', 0x27)
+
 log = logging.getLogger(__name__)
 
 try:
@@ -129,6 +136,26 @@ class Oven (threading.Thread):
                      self.runtime,
                      self.totaltime,
                      time_left))
+
+                # code to drive i2c 16x2 LCD using RPLCD module to display kiln temp and target temp during firing
+                tempstring=str(int(self.temp_sensor.temperature + config.thermocouple_offset))
+                tarstring=str(int(self.target))
+                lcd.clear()
+                lcd.cursor_pos = (0, 0)
+                lcd.write_string('Temp:' + tempstring  + " C")
+                lcd.cursor_pos = (1, 0)
+                lcd.write_string('Target:' + tarstring + " C")               
+
+                # produce continuous CSV kiln log file using table_logger module    
+                with open('/home/pi/kiln-controller/kilnlog.csv', 'ba') as csvfile: 
+                     tbl = TableLogger(file=csvfile, 
+                     csv=True,float_format='{:,.2f}'.format,default_colwidth=15) 
+                     datetime_object = datetime.datetime.now() 
+                     tbl(datetime_object,self.temp_sensor.temperature + 
+                     config.thermocouple_offset, self.target, pid, 
+                     heat_on, heat_off, self.runtime, self.totaltime,
+                     time_left)                  
+                     
 
                 # FIX - this whole thing should be replaced with
                 # a warning low and warning high below and above
