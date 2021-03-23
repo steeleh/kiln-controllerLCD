@@ -110,6 +110,14 @@ Select a profile and click Start. If you do not have a raspberry pi connected
 and configured, then your run will be simulated.  Simulations run at near real
 time and kiln characteristics are defined in config.py.
 
+#### LCD
+
+Added facility to drive 16x2 LCD display to show kiln temperature and target temperature using RPLCD module.
+
+#### Logger
+
+Added facility to produce running kiln log file in CSV format using table-logger module.
+
 ## License
 
 This program is free software: you can redistribute it and/or modify
