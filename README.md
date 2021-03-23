@@ -112,7 +112,7 @@ time and kiln characteristics are defined in config.py.
 
 #### LCD
 
-Added facility to drive 16x2 LCD display to show kiln temperature and target temperature using RPLCD module.
+Added facility to drive 16x2 LCD display to show kiln temperature and target temperature using RPLCD module. Requires i2c to be activated via raspi-config. 
 
 #### Logger
 
