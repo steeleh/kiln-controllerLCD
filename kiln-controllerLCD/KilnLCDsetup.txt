@@ -1,0 +1,13 @@
+$ sudo apt-get update
+$ sudo apt-get dist-upgrade
+
+$ sudo apt-get install python3-dev python3-virtualenv libevent-dev virtualenv
+$ git clone https://github.com/steeleh/kiln-controllerLCD.git
+$ cd kiln-controllerLCD
+$ virtualenv -p python3 venv
+$ source venv/bin/activate
+$ pip3 install --upgrade setuptools
+$ pip3 install greenlet bottle gevent gevent-websocket
+$ pip3 install RPLCD
+$ pip3 install smbus2
+$ sudo apt-get install libatlas-base-dev
